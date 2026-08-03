@@ -1,0 +1,182 @@
+[
+  {
+    "subject": "Docker",
+    "question": "What is Docker, and why is it useful?",
+    "answer": "Docker packages an application and its dependencies into a portable container image. It helps the same application run consistently across development, testing, and production."
+  },
+  {
+    "subject": "Docker",
+    "question": "What is the difference between a Docker container and a virtual machine?",
+    "answer": "A virtual machine includes a full guest operating system, while a container shares the host kernel. Containers are usually smaller and faster, while virtual machines provide stronger isolation."
+  },
+  {
+    "subject": "Docker",
+    "question": "What are Docker images, containers, and registries?",
+    "answer": "An image is the immutable template, a container is a running instance of that image, and a registry stores and distributes images. Examples of registries include Docker Hub and Amazon ECR."
+  },
+  {
+    "subject": "Docker",
+    "question": "What is a Dockerfile, and how do layers and caching work?",
+    "answer": "A Dockerfile defines how to build an image using instructions such as FROM, COPY, RUN, and CMD. Docker caches unchanged layers, so stable steps should appear before frequently changing files."
+  },
+  {
+    "subject": "Docker",
+    "question": "How do Docker ports, networks, volumes, and environment variables work?",
+    "answer": "Ports expose container services, networks connect containers, volumes persist data, and environment variables provide runtime configuration. Secrets should not be stored directly in the image."
+  },
+  {
+    "subject": "Docker",
+    "question": "What is Docker Compose, and how is it different from a Dockerfile?",
+    "answer": "A Dockerfile builds an image, while Docker Compose defines how one or more containers run together. Compose is mainly used for local multi-container environments."
+  },
+  {
+    "subject": "Docker",
+    "question": "How do Docker, Docker Compose, and Kubernetes fit together?",
+    "answer": "Docker builds container images, Docker Compose runs related containers locally, and Kubernetes manages containers across a cluster. Modern Kubernetes usually runs images through containerd or CRI-O."
+  },
+  {
+    "subject": "Kubernetes",
+    "question": "What is Kubernetes, and what problems does it solve?",
+    "answer": "Kubernetes deploys and manages containerized applications across multiple machines. It provides scheduling, scaling, self-healing, networking, and rolling updates."
+  },
+  {
+    "subject": "Kubernetes",
+    "question": "What are the main parts of Kubernetes architecture?",
+    "answer": "A Kubernetes cluster has a control plane and worker nodes. The control plane manages cluster state, while worker nodes run Pods."
+  },
+  {
+    "subject": "Kubernetes",
+    "question": "What are Nodes, Pods, ReplicaSets, and Deployments?",
+    "answer": "A node is a worker machine, a Pod is the smallest deployable unit, a ReplicaSet maintains Pod replicas, and a Deployment manages updates and rollbacks."
+  },
+  {
+    "subject": "Kubernetes",
+    "question": "What is a Kubernetes Service, and how does it find Pods?",
+    "answer": "A Service gives a stable IP address and DNS name to a group of Pods. It finds matching Pods through labels and routes traffic only to ready endpoints."
+  },
+  {
+    "subject": "Kubernetes",
+    "question": "What is the difference between ClusterIP, NodePort, LoadBalancer, and Ingress?",
+    "answer": "ClusterIP is internal, NodePort exposes a port on every node, LoadBalancer creates external access, and Ingress routes HTTP or HTTPS traffic by host or path."
+  },
+  {
+    "subject": "Kubernetes",
+    "question": "How can Pods be scheduled only on selected nodes?",
+    "answer": "Use nodeSelector or node affinity to target certain nodes. Taints block normal Pods, while tolerations allow selected Pods onto those nodes."
+  },
+  {
+    "subject": "Kubernetes",
+    "question": "What are ConfigMaps, Secrets, and environment configuration in Kubernetes?",
+    "answer": "ConfigMaps store non-sensitive configuration, while Secrets store sensitive values. Both can be mounted as files or exposed as environment variables."
+  },
+  {
+    "subject": "Kubernetes",
+    "question": "What are liveness, readiness, and startup probes?",
+    "answer": "Startup probes protect slow-starting containers, readiness probes control traffic, and liveness probes trigger restarts. Readiness affects routing; liveness affects recovery."
+  },
+  {
+    "subject": "Kubernetes",
+    "question": "How do resource requests, limits, scaling, and self-healing work?",
+    "answer": "Requests reserve CPU and memory for scheduling, while limits cap usage. Kubernetes can scale replicas and replace failed Pods to maintain the desired state."
+  },
+  {
+    "subject": "Kubernetes",
+    "question": "How do rolling updates and rollbacks work?",
+    "answer": "A rolling update gradually replaces old Pods with new ones. If the release fails, Kubernetes can revert the Deployment to an earlier revision."
+  },
+  {
+    "subject": "Kubernetes",
+    "question": "What should you know about Kubernetes storage, StatefulSets, Namespaces, and RBAC?",
+    "answer": "PersistentVolumes provide storage, StatefulSets manage stateful workloads, Namespaces separate resources, and RBAC controls permissions. These features help organize and secure larger clusters."
+  },
+  {
+    "subject": "Kubernetes",
+    "question": "Does Kubernetes use Docker?",
+    "answer": "Kubernetes no longer requires Docker Engine and usually uses containerd or CRI-O. It can still run images built with Docker because they follow OCI standards."
+  },
+  {
+    "subject": "Helm",
+    "question": "What is Helm, and why is it called a Kubernetes package manager?",
+    "answer": "Helm is a package manager for Kubernetes that bundles templates, values, and metadata into charts. It supports installation, upgrades, history, and rollbacks."
+  },
+  {
+    "subject": "Helm",
+    "question": "What are the important files in a Helm chart?",
+    "answer": "Chart.yaml stores chart metadata, values.yaml stores defaults, and templates contains parameterized Kubernetes manifests. Helm renders them into normal YAML."
+  },
+  {
+    "subject": "Helm",
+    "question": "What happens during helm install, and how is it different from kubectl apply?",
+    "answer": "helm install renders a chart with values and records it as a release. kubectl apply sends existing YAML directly and does not provide Helm's release management."
+  },
+  {
+    "subject": "Helm",
+    "question": "What is a Helm release, and how are environments configured?",
+    "answer": "A release is one installed instance of a chart. Different values files let the same chart be reused for development, testing, and production."
+  },
+  {
+    "subject": "Helm",
+    "question": "How do Helm upgrades, rollbacks, and release history work?",
+    "answer": "helm upgrade updates a release, while helm rollback restores an older revision. helm uninstall removes the release."
+  },
+  {
+    "subject": "Helm",
+    "question": "Which Helm commands are important for interviews?",
+    "answer": "The key Helm commands are install, upgrade, rollback, list, template, lint, and uninstall. These cover deployment, validation, inspection, and recovery."
+  },
+  {
+    "subject": "Helm",
+    "question": "What are Helm repositories, dependencies, hooks, and chart versions?",
+    "answer": "Repositories distribute charts, dependencies include other charts, hooks run at lifecycle events, and chart version identifies the package. appVersion describes the packaged application version."
+  },
+  {
+    "subject": "AWS",
+    "question": "What is AWS?",
+    "answer": "AWS is Amazon's cloud platform for compute, storage, networking, databases, and security. Resources are created on demand and usually billed by usage."
+  },
+  {
+    "subject": "AWS",
+    "question": "What is Amazon EC2, and how do you launch an instance?",
+    "answer": "EC2 provides virtual servers in AWS. Choose an image, instance type, key pair, network, and Security Group, then launch and connect through SSH or RDP."
+  },
+  {
+    "subject": "AWS",
+    "question": "What is Amazon S3?",
+    "answer": "S3 is object storage for files such as images, backups, logs, and documents. Data is stored as objects inside buckets."
+  },
+  {
+    "subject": "AWS",
+    "question": "What is IAM, and what does least privilege mean?",
+    "answer": "IAM manages users, roles, and policies in AWS. Least privilege means granting only the permissions required for a task."
+  },
+  {
+    "subject": "AWS",
+    "question": "What is a VPC?",
+    "answer": "A VPC is an isolated virtual network in AWS. It contains subnets, route tables, gateways, and network security controls."
+  },
+  {
+    "subject": "AWS",
+    "question": "What is the difference between a Security Group and a Network ACL?",
+    "answer": "A Security Group is a stateful firewall attached to resources, while a Network ACL is a stateless firewall applied to a subnet. Security Groups are resource-level; NACLs are subnet-level."
+  },
+  {
+    "subject": "AWS",
+    "question": "What is the difference between a Load Balancer and Auto Scaling?",
+    "answer": "A Load Balancer distributes traffic across healthy instances. Auto Scaling adds or removes instances according to demand, and they are commonly used together."
+  },
+  {
+    "subject": "Docker",
+    "question": "Which Docker terminal commands are important for interviews?",
+    "answer": "Build an image with 'docker build -t myapp .'. Run it with 'docker run -p 8080:8080 myapp'. Inspect containers with 'docker ps'. Stop a container with 'docker stop <container>'. For Compose, use 'docker compose up -d'."
+  },
+  {
+    "subject": "Kubernetes",
+    "question": "Which kubectl commands are important for interviews?",
+    "answer": "Create or update resources with 'kubectl apply -f deployment.yaml'. Inspect Pods with 'kubectl get pods'."
+  },
+  {
+    "subject": "Helm",
+    "question": "Which Helm terminal commands are important for interviews?",
+    "answer": "Install a chart with 'helm install myapp ./myapp-chart'. Update it with 'helm upgrade myapp ./myapp-chart'. Roll back with 'helm rollback myapp 1'."
+  }
+]

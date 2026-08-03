@@ -348,15 +348,232 @@
       padding: 0 20px 20px;
     }
 
-    @media (max-width: 680px) {
-      .app { width: min(100% - 18px, 1040px); padding-top: 14px; }
-      .topbar { align-items: flex-start; flex-direction: column; }
-      .toolbar { justify-content: flex-start; }
-      .logo { width: 41px; height: 41px; }
-      .card-content { min-height: 465px; padding: 25px 18px; }
-      .viewer-head, .viewer-actions { padding-left: 14px; padding-right: 14px; }
-      .viewer-actions > .action-group { width: 100%; }
-      .viewer-actions .btn { flex: 1; }
+    /* Mobile-first layout and horizontal-scroll protection */
+    html, body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      position: relative;
+    }
+
+    .app {
+      width: calc(100% - 18px);
+      max-width: 1040px;
+      padding: 14px 0 32px;
+      overflow-x: clip;
+    }
+
+    .topbar {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .brand,
+    .brand > div:last-child,
+    .toolbar,
+    .panel,
+    .viewer,
+    .card-content,
+    .question-row,
+    .answer-block,
+    .answer-text,
+    .viewer-actions,
+    .action-group {
+      min-width: 0;
+      max-width: 100%;
+    }
+
+    .toolbar {
+      width: 100%;
+      justify-content: flex-start;
+    }
+
+    .toolbar .btn {
+      flex: 1 1 calc(50% - 9px);
+      min-width: 0;
+    }
+
+    .logo {
+      width: 41px;
+      height: 41px;
+      flex: 0 0 auto;
+    }
+
+    .home-panel {
+      padding: 16px;
+    }
+
+    .home-heading {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .subject-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .subject-card {
+      width: 100%;
+      min-height: 112px;
+    }
+
+    .viewer-head,
+    .viewer-actions {
+      padding-left: 14px;
+      padding-right: 14px;
+    }
+
+    .card-content {
+      min-height: 465px;
+      padding: 25px 18px;
+    }
+
+    .question-row {
+      width: 100%;
+      gap: 10px;
+    }
+
+    .card-content h2,
+    .answer-text,
+    .answer-text p {
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .answer-block {
+      width: 100%;
+      padding: 17px;
+    }
+
+    .command-block {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .command-block code {
+      min-width: max-content;
+    }
+
+    .viewer-actions {
+      align-items: stretch;
+      flex-direction: column;
+    }
+
+    .viewer-actions > .action-group {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .viewer-actions > .action-group:last-child {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .viewer-actions .btn {
+      width: 100%;
+      min-width: 0;
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+
+    dialog {
+      max-width: calc(100vw - 18px);
+      max-height: calc(100dvh - 18px);
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    .dialog-head,
+    .dialog-body,
+    .dialog-actions,
+    .form-grid,
+    .field,
+    input,
+    textarea,
+    select {
+      min-width: 0;
+      max-width: 100%;
+    }
+
+    .dialog-actions {
+      flex-wrap: wrap;
+    }
+
+    @media (min-width: 681px) {
+      .app {
+        width: min(1040px, calc(100% - 28px));
+        padding: 24px 0 42px;
+      }
+
+      .topbar {
+        align-items: center;
+        flex-direction: row;
+        gap: 18px;
+      }
+
+      .toolbar {
+        width: auto;
+        justify-content: flex-end;
+      }
+
+      .toolbar .btn {
+        flex: 0 0 auto;
+      }
+
+      .logo {
+        width: 46px;
+        height: 46px;
+      }
+
+      .home-panel {
+        padding: clamp(18px, 4vw, 30px);
+      }
+
+      .home-heading {
+        align-items: end;
+        flex-direction: row;
+      }
+
+      .subject-grid {
+        grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      }
+
+      .subject-card {
+        min-height: 138px;
+      }
+
+      .card-content {
+        min-height: 430px;
+        padding: clamp(26px, 6vw, 58px);
+      }
+
+      .answer-block {
+        padding: 22px;
+      }
+
+      .viewer-actions {
+        align-items: center;
+        flex-direction: row;
+      }
+
+      .viewer-actions > .action-group,
+      .viewer-actions > .action-group:last-child {
+        width: auto;
+        display: flex;
+      }
+
+      .viewer-actions .btn {
+        width: auto;
+        padding-left: 14px;
+        padding-right: 14px;
+      }
     }
   </style>
 </head>
@@ -374,7 +591,7 @@
         <button class="btn compact" id="homeTopBtn" type="button">Home</button>
         <button class="btn compact primary" id="addBtn" type="button">+ Add</button>
         <button class="btn compact" id="exportBtn" type="button">Export JSON</button>
-        <button class="btn compact danger" id="resetBtn" type="button">Reset</button>
+        <button class="btn compact danger" id="resetBtn" type="button">Reload JSON</button>
       </div>
     </header>
 
@@ -409,7 +626,7 @@
       </div>
     </section>
 
-    <p class="footer-note">Your cards and current position are saved in this browser.</p>
+    <p class="footer-note">Cards load from questions.json each time. After editing, replace the JSON file with the downloaded version.</p>
   </main>
 
   <dialog id="itemDialog">
@@ -446,195 +663,11 @@
   </dialog>
 
   <script>
-    const ORIGINAL_JSON = String.raw`[
-  {
-    "subject": "Docker",
-    "question": "What is Docker, and why is it useful?",
-    "answer": "Docker packages an application and its dependencies into a portable container image. It helps the same application run consistently across development, testing, and production."
-  },
-  {
-    "subject": "Docker",
-    "question": "What is the difference between a Docker container and a virtual machine?",
-    "answer": "A virtual machine includes a full guest operating system, while a container shares the host kernel. Containers are usually smaller and faster, while virtual machines provide stronger isolation."
-  },
-  {
-    "subject": "Docker",
-    "question": "What are Docker images, containers, and registries?",
-    "answer": "An image is the immutable template, a container is a running instance of that image, and a registry stores and distributes images. Examples of registries include Docker Hub and Amazon ECR."
-  },
-  {
-    "subject": "Docker",
-    "question": "What is a Dockerfile, and how do layers and caching work?",
-    "answer": "A Dockerfile defines how to build an image using instructions such as FROM, COPY, RUN, and CMD. Docker caches unchanged layers, so stable steps should appear before frequently changing files."
-  },
-  {
-    "subject": "Docker",
-    "question": "How do Docker ports, networks, volumes, and environment variables work?",
-    "answer": "Ports expose container services, networks connect containers, volumes persist data, and environment variables provide runtime configuration. Secrets should not be stored directly in the image."
-  },
-  {
-    "subject": "Docker",
-    "question": "What is Docker Compose, and how is it different from a Dockerfile?",
-    "answer": "A Dockerfile builds an image, while Docker Compose defines how one or more containers run together. Compose is mainly used for local multi-container environments."
-  },
-  {
-    "subject": "Docker",
-    "question": "How do Docker, Docker Compose, and Kubernetes fit together?",
-    "answer": "Docker builds container images, Docker Compose runs related containers locally, and Kubernetes manages containers across a cluster. Modern Kubernetes usually runs images through containerd or CRI-O."
-  },
-  {
-    "subject": "Kubernetes",
-    "question": "What is Kubernetes, and what problems does it solve?",
-    "answer": "Kubernetes deploys and manages containerized applications across multiple machines. It provides scheduling, scaling, self-healing, networking, and rolling updates."
-  },
-  {
-    "subject": "Kubernetes",
-    "question": "What are the main parts of Kubernetes architecture?",
-    "answer": "A Kubernetes cluster has a control plane and worker nodes. The control plane manages cluster state, while worker nodes run Pods."
-  },
-  {
-    "subject": "Kubernetes",
-    "question": "What are Nodes, Pods, ReplicaSets, and Deployments?",
-    "answer": "A node is a worker machine, a Pod is the smallest deployable unit, a ReplicaSet maintains Pod replicas, and a Deployment manages updates and rollbacks."
-  },
-  {
-    "subject": "Kubernetes",
-    "question": "What is a Kubernetes Service, and how does it find Pods?",
-    "answer": "A Service gives a stable IP address and DNS name to a group of Pods. It finds matching Pods through labels and routes traffic only to ready endpoints."
-  },
-  {
-    "subject": "Kubernetes",
-    "question": "What is the difference between ClusterIP, NodePort, LoadBalancer, and Ingress?",
-    "answer": "ClusterIP is internal, NodePort exposes a port on every node, LoadBalancer creates external access, and Ingress routes HTTP or HTTPS traffic by host or path."
-  },
-  {
-    "subject": "Kubernetes",
-    "question": "How can Pods be scheduled only on selected nodes?",
-    "answer": "Use nodeSelector or node affinity to target certain nodes. Taints block normal Pods, while tolerations allow selected Pods onto those nodes."
-  },
-  {
-    "subject": "Kubernetes",
-    "question": "What are ConfigMaps, Secrets, and environment configuration in Kubernetes?",
-    "answer": "ConfigMaps store non-sensitive configuration, while Secrets store sensitive values. Both can be mounted as files or exposed as environment variables."
-  },
-  {
-    "subject": "Kubernetes",
-    "question": "What are liveness, readiness, and startup probes?",
-    "answer": "Startup probes protect slow-starting containers, readiness probes control traffic, and liveness probes trigger restarts. Readiness affects routing; liveness affects recovery."
-  },
-  {
-    "subject": "Kubernetes",
-    "question": "How do resource requests, limits, scaling, and self-healing work?",
-    "answer": "Requests reserve CPU and memory for scheduling, while limits cap usage. Kubernetes can scale replicas and replace failed Pods to maintain the desired state."
-  },
-  {
-    "subject": "Kubernetes",
-    "question": "How do rolling updates and rollbacks work?",
-    "answer": "A rolling update gradually replaces old Pods with new ones. If the release fails, Kubernetes can revert the Deployment to an earlier revision."
-  },
-  {
-    "subject": "Kubernetes",
-    "question": "What should you know about Kubernetes storage, StatefulSets, Namespaces, and RBAC?",
-    "answer": "PersistentVolumes provide storage, StatefulSets manage stateful workloads, Namespaces separate resources, and RBAC controls permissions. These features help organize and secure larger clusters."
-  },
-  {
-    "subject": "Kubernetes",
-    "question": "Does Kubernetes use Docker?",
-    "answer": "Kubernetes no longer requires Docker Engine and usually uses containerd or CRI-O. It can still run images built with Docker because they follow OCI standards."
-  },
-  {
-    "subject": "Helm",
-    "question": "What is Helm, and why is it called a Kubernetes package manager?",
-    "answer": "Helm is a package manager for Kubernetes that bundles templates, values, and metadata into charts. It supports installation, upgrades, history, and rollbacks."
-  },
-  {
-    "subject": "Helm",
-    "question": "What are the important files in a Helm chart?",
-    "answer": "Chart.yaml stores chart metadata, values.yaml stores defaults, and templates contains parameterized Kubernetes manifests. Helm renders them into normal YAML."
-  },
-  {
-    "subject": "Helm",
-    "question": "What happens during helm install, and how is it different from kubectl apply?",
-    "answer": "helm install renders a chart with values and records it as a release. kubectl apply sends existing YAML directly and does not provide Helm's release management."
-  },
-  {
-    "subject": "Helm",
-    "question": "What is a Helm release, and how are environments configured?",
-    "answer": "A release is one installed instance of a chart. Different values files let the same chart be reused for development, testing, and production."
-  },
-  {
-    "subject": "Helm",
-    "question": "How do Helm upgrades, rollbacks, and release history work?",
-    "answer": "helm upgrade updates a release, while helm rollback restores an older revision. helm uninstall removes the release."
-  },
-  {
-    "subject": "Helm",
-    "question": "Which Helm commands are important for interviews?",
-    "answer": "The key Helm commands are install, upgrade, rollback, list, template, lint, and uninstall. These cover deployment, validation, inspection, and recovery."
-  },
-  {
-    "subject": "Helm",
-    "question": "What are Helm repositories, dependencies, hooks, and chart versions?",
-    "answer": "Repositories distribute charts, dependencies include other charts, hooks run at lifecycle events, and chart version identifies the package. appVersion describes the packaged application version."
-  },
-  {
-    "subject": "AWS",
-    "question": "What is AWS?",
-    "answer": "AWS is Amazon's cloud platform for compute, storage, networking, databases, and security. Resources are created on demand and usually billed by usage."
-  },
-  {
-    "subject": "AWS",
-    "question": "What is Amazon EC2, and how do you launch an instance?",
-    "answer": "EC2 provides virtual servers in AWS. Choose an image, instance type, key pair, network, and Security Group, then launch and connect through SSH or RDP."
-  },
-  {
-    "subject": "AWS",
-    "question": "What is Amazon S3?",
-    "answer": "S3 is object storage for files such as images, backups, logs, and documents. Data is stored as objects inside buckets."
-  },
-  {
-    "subject": "AWS",
-    "question": "What is IAM, and what does least privilege mean?",
-    "answer": "IAM manages users, roles, and policies in AWS. Least privilege means granting only the permissions required for a task."
-  },
-  {
-    "subject": "AWS",
-    "question": "What is a VPC?",
-    "answer": "A VPC is an isolated virtual network in AWS. It contains subnets, route tables, gateways, and network security controls."
-  },
-  {
-    "subject": "AWS",
-    "question": "What is the difference between a Security Group and a Network ACL?",
-    "answer": "A Security Group is a stateful firewall attached to resources, while a Network ACL is a stateless firewall applied to a subnet. Security Groups are resource-level; NACLs are subnet-level."
-  },
-  {
-    "subject": "AWS",
-    "question": "What is the difference between a Load Balancer and Auto Scaling?",
-    "answer": "A Load Balancer distributes traffic across healthy instances. Auto Scaling adds or removes instances according to demand, and they are commonly used together."
-  },
-  {
-    "subject": "Docker",
-    "question": "Which Docker terminal commands are important for interviews?",
-    "answer": "Build an image with 'docker build -t myapp .'. Run it with 'docker run -p 8080:8080 myapp'. Inspect containers with 'docker ps'. Stop a container with 'docker stop <container>'. For Compose, use 'docker compose up -d'."
-  },
-  {
-    "subject": "Kubernetes",
-    "question": "Which kubectl commands are important for interviews?",
-    "answer": "Create or update resources with 'kubectl apply -f deployment.yaml'. Inspect Pods with 'kubectl get pods'."
-  },
-  {
-    "subject": "Helm",
-    "question": "Which Helm terminal commands are important for interviews?",
-    "answer": "Install a chart with 'helm install myapp ./myapp-chart'. Update it with 'helm upgrade myapp ./myapp-chart'. Roll back with 'helm rollback myapp 1'."
-  }
-]`;
+    const JSON_FILE = "questions.json";
 
-    const DATA_KEY = "interviewStudyCards_v8";
-    const STATE_KEY = "interviewStudyState_v8";
-
-    const originalItems = JSON.parse(ORIGINAL_JSON);
-    let items = loadItems();
-    let state = loadState();
+    let items = [];
+    let currentSubject = "";
+    let currentPosition = 0;
     let editingIndex = null;
 
     const homeView = document.getElementById("homeView");
@@ -670,39 +703,33 @@
       return {
         subject: String(item.subject || "General").trim() || "General",
         question: String(item.question || "Untitled topic").trim() || "Untitled topic",
-        answer: String(item.answer || item.shortAnswer || "").trim()
+        answer: String(item.answer || "").trim()
       };
     }
 
-    function loadItems() {
+    async function loadJsonFile() {
       try {
-        const saved = JSON.parse(localStorage.getItem(DATA_KEY));
-        if (Array.isArray(saved)) return saved.map(normalizeItem);
+        const response = await fetch(`${JSON_FILE}?v=${Date.now()}`, { cache: "no-store" });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const data = await response.json();
+        if (!Array.isArray(data)) throw new Error("The JSON root must be an array.");
+        items = data.map(normalizeItem);
+        currentSubject = "";
+        currentPosition = 0;
+        renderHome();
       } catch (error) {
-        console.warn("Could not load saved cards:", error);
+        console.error("Could not load questions.json:", error);
+        viewerView.hidden = true;
+        homeView.hidden = false;
+        homeView.innerHTML = `
+          <div class="empty">
+            <h2>Could not load ${escapeHtml(JSON_FILE)}</h2>
+            <p>Keep <strong>interview-study.html</strong> and <strong>${escapeHtml(JSON_FILE)}</strong> in the same folder and open them through a local or web server.</p>
+            <p>Some mobile browsers block loading nearby files when HTML is opened directly with a file:// address.</p>
+            <button class="btn primary" id="retryLoadBtn" type="button">Try again</button>
+          </div>`;
+        document.getElementById("retryLoadBtn").addEventListener("click", loadJsonFile);
       }
-      return originalItems.map(normalizeItem);
-    }
-
-    function loadState() {
-      try {
-        const saved = JSON.parse(localStorage.getItem(STATE_KEY));
-        if (saved && typeof saved === "object") {
-          return {
-            view: saved.view === "viewer" ? "viewer" : "home",
-            subject: typeof saved.subject === "string" ? saved.subject : "",
-            position: Number.isInteger(saved.position) ? saved.position : 0
-          };
-        }
-      } catch (error) {
-        console.warn("Could not load saved state:", error);
-      }
-      return { view: "home", subject: "", position: 0 };
-    }
-
-    function saveAll() {
-      localStorage.setItem(DATA_KEY, JSON.stringify(items));
-      localStorage.setItem(STATE_KEY, JSON.stringify(state));
     }
 
     function getSubjects() {
@@ -716,8 +743,6 @@
     }
 
     function renderHome() {
-      state.view = "home";
-      saveAll();
       viewerView.hidden = true;
       homeView.hidden = false;
 
@@ -731,7 +756,7 @@
         <div class="home-heading">
           <div>
             <h2>Choose a subject</h2>
-            <p>Open a subject and continue from your saved card.</p>
+            <p>Cards are loaded fresh from ${escapeHtml(JSON_FILE)} whenever the app opens.</p>
           </div>
         </div>
         <div class="subject-grid">
@@ -750,55 +775,44 @@
       });
     }
 
-    function openSubject(subject, requestedPosition) {
+    function openSubject(subject, requestedPosition = 0) {
       const subjectItems = getSubjectItems(subject);
       if (!subjectItems.length) {
         renderHome();
         return;
       }
 
-      const previousSubject = state.subject;
-      state.view = "viewer";
-      state.subject = subject;
-      if (Number.isInteger(requestedPosition)) {
-        state.position = Math.max(0, Math.min(requestedPosition, subjectItems.length - 1));
-      } else if (previousSubject !== subject) {
-        state.position = 0;
-      } else {
-        state.position = Math.max(0, Math.min(state.position, subjectItems.length - 1));
-      }
+      currentSubject = subject;
+      currentPosition = Math.max(0, Math.min(requestedPosition, subjectItems.length - 1));
       renderViewer();
     }
 
     function renderViewer() {
-      const subjectItems = getSubjectItems(state.subject);
+      const subjectItems = getSubjectItems(currentSubject);
       if (!subjectItems.length) {
         renderHome();
         return;
       }
 
-      state.position = Math.max(0, Math.min(state.position, subjectItems.length - 1));
-      const current = subjectItems[state.position].item;
+      currentPosition = Math.max(0, Math.min(currentPosition, subjectItems.length - 1));
+      const current = subjectItems[currentPosition].item;
 
       homeView.hidden = true;
       viewerView.hidden = false;
       subjectBadge.textContent = current.subject;
-      counter.textContent = `${state.position + 1} / ${subjectItems.length}`;
-      progressBar.style.width = `${((state.position + 1) / subjectItems.length) * 100}%`;
+      counter.textContent = `${currentPosition + 1} / ${subjectItems.length}`;
+      progressBar.style.width = `${((currentPosition + 1) / subjectItems.length) * 100}%`;
       questionText.textContent = current.question;
       renderFormattedAnswer(current.answer);
-      previousBtn.disabled = state.position === 0;
-      nextBtn.disabled = state.position === subjectItems.length - 1;
-      saveAll();
+      previousBtn.disabled = currentPosition === 0;
+      nextBtn.disabled = currentPosition === subjectItems.length - 1;
     }
 
     function renderFormattedAnswer(answer) {
       answerText.replaceChildren();
-
       const source = String(answer || "").trim();
       if (!source) return;
 
-      // Commands entered between single quotes or backticks are shown as code blocks.
       const commandPattern = /(?:'([^'\n]+)'|`([^`\n]+)`)/g;
       let lastIndex = 0;
       let match;
@@ -806,13 +820,10 @@
       function appendText(text) {
         const cleaned = text.trim();
         if (!cleaned) return;
-
-        // Preserve manually entered paragraphs and make long answers easier to scan.
         const paragraphs = cleaned
           .split(/\n\s*\n|(?<=[.!?])\s+(?=[A-Z0-9])/g)
           .map(part => part.trim())
           .filter(Boolean);
-
         paragraphs.forEach(paragraph => {
           const element = document.createElement("p");
           element.textContent = paragraph;
@@ -834,13 +845,12 @@
         appendCommand(match[1] || match[2]);
         lastIndex = commandPattern.lastIndex;
       }
-
       appendText(source.slice(lastIndex));
     }
 
     function currentEntry() {
-      const subjectItems = getSubjectItems(state.subject);
-      return subjectItems[state.position] || null;
+      const subjectItems = getSubjectItems(currentSubject);
+      return subjectItems[currentPosition] || null;
     }
 
     function fillSubjectOptions(selectedSubject = "") {
@@ -870,7 +880,7 @@
     function openAddDialog() {
       editingIndex = null;
       dialogTitle.textContent = "Add card";
-      fillSubjectOptions(state.subject || "");
+      fillSubjectOptions(currentSubject);
       questionInput.value = "";
       answerInput.value = "";
       newSubjectInput.value = "";
@@ -895,7 +905,39 @@
       editingIndex = null;
     }
 
-    function removeCurrent() {
+    async function saveJsonReplacement() {
+      const jsonText = JSON.stringify(items, null, 2) + "\n";
+      const shouldSave = confirm(`The cards changed. Save an updated ${JSON_FILE} now?`);
+      if (!shouldSave) return;
+
+      if ("showSaveFilePicker" in window) {
+        try {
+          const handle = await window.showSaveFilePicker({
+            suggestedName: JSON_FILE,
+            types: [{ description: "JSON file", accept: { "application/json": [".json"] } }]
+          });
+          const writable = await handle.createWritable();
+          await writable.write(jsonText);
+          await writable.close();
+          return;
+        } catch (error) {
+          if (error && error.name === "AbortError") return;
+          console.warn("Direct replacement failed; using download instead.", error);
+        }
+      }
+
+      const blob = new Blob([jsonText], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = JSON_FILE;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+
+    async function removeCurrent() {
       const entry = currentEntry();
       if (!entry) return;
       if (!confirm(`Remove this card from ${entry.item.subject}?`)) return;
@@ -904,35 +946,31 @@
       items.splice(entry.globalIndex, 1);
       const remaining = getSubjectItems(oldSubject);
       if (!remaining.length) {
-        state = { view: "home", subject: "", position: 0 };
-        saveAll();
+        currentSubject = "";
+        currentPosition = 0;
         renderHome();
-        return;
+      } else {
+        currentPosition = Math.min(currentPosition, remaining.length - 1);
+        renderViewer();
       }
-
-      state.position = Math.min(state.position, remaining.length - 1);
-      saveAll();
-      renderViewer();
+      await saveJsonReplacement();
     }
 
     function exportJson() {
-      const blob = new Blob([JSON.stringify(items, null, 2)], { type: "application/json" });
+      const blob = new Blob([JSON.stringify(items, null, 2) + "\n"], { type: "application/json" });
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.download = "interview-study-cards.json";
+      link.download = JSON_FILE;
       document.body.appendChild(link);
       link.click();
       link.remove();
-      URL.revokeObjectURL(url);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
     }
 
-    function resetData() {
-      if (!confirm("Reset all changes and restore the original cards?")) return;
-      items = originalItems.map(normalizeItem);
-      state = { view: "home", subject: "", position: 0 };
-      saveAll();
-      renderHome();
+    async function reloadData() {
+      if (!confirm(`Discard unsaved in-memory changes and reload ${JSON_FILE}?`)) return;
+      await loadJsonFile();
     }
 
     function escapeHtml(value) {
@@ -945,16 +983,16 @@
     }
 
     previousBtn.addEventListener("click", () => {
-      if (state.position > 0) {
-        state.position -= 1;
+      if (currentPosition > 0) {
+        currentPosition -= 1;
         renderViewer();
       }
     });
 
     nextBtn.addEventListener("click", () => {
-      const length = getSubjectItems(state.subject).length;
-      if (state.position < length - 1) {
-        state.position += 1;
+      const length = getSubjectItems(currentSubject).length;
+      if (currentPosition < length - 1) {
+        currentPosition += 1;
         renderViewer();
       }
     });
@@ -966,12 +1004,12 @@
     questionEditBtn.addEventListener("click", openEditDialog);
     deleteBtn.addEventListener("click", removeCurrent);
     exportBtn.addEventListener("click", exportJson);
-    resetBtn.addEventListener("click", resetData);
+    resetBtn.addEventListener("click", reloadData);
     closeDialogBtn.addEventListener("click", closeDialog);
     cancelBtn.addEventListener("click", closeDialog);
     subjectSelect.addEventListener("change", toggleNewSubjectField);
 
-    itemForm.addEventListener("submit", event => {
+    itemForm.addEventListener("submit", async event => {
       event.preventDefault();
 
       const subject = subjectSelect.value === "__new__"
@@ -979,25 +1017,23 @@
         : subjectSelect.value.trim();
       const question = questionInput.value.trim();
       const answer = answerInput.value.trim();
-
       if (!subject || !question || !answer) return;
 
       if (editingIndex === null) {
         items.push({ subject, question, answer });
-        state.subject = subject;
-        state.position = getSubjectItems(subject).length - 1;
+        currentSubject = subject;
+        currentPosition = getSubjectItems(subject).length - 1;
       } else {
         items[editingIndex] = { subject, question, answer };
-        state.subject = subject;
+        currentSubject = subject;
         const subjectItems = getSubjectItems(subject);
-        state.position = Math.max(0, subjectItems.findIndex(entry => entry.globalIndex === editingIndex));
+        currentPosition = Math.max(0, subjectItems.findIndex(entry => entry.globalIndex === editingIndex));
       }
 
-      saveAll();
       itemDialog.close();
       editingIndex = null;
-      state.view = "viewer";
       renderViewer();
+      await saveJsonReplacement();
     });
 
     itemDialog.addEventListener("click", event => {
@@ -1006,11 +1042,7 @@
       if (outside) closeDialog();
     });
 
-    if (state.view === "viewer" && getSubjectItems(state.subject).length) {
-      renderViewer();
-    } else {
-      renderHome();
-    }
+    loadJsonFile();
   </script>
 </body>
 </html>
