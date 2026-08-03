@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffffff">
+  <title>Interview Study Cards</title>
+  <style>
+    :root {
+      --background: #fffafa;
+      --surface: rgba(255, 255, 255, 0.82);
+      --surface-strong: rgba(255, 255, 255, 0.96);
+      --red: #c62828;
+      --red-dark: #8f1717;
+      --red-soft: #fff1f1;
+      --border: rgba(198, 40, 40, 0.46);
+      --border-light: rgba(198, 40, 40, 0.20);
+      --text: #241b1b;
+      --muted: #786868;
+      --shadow: 0 18px 50px rgba(125, 25, 25, 0.10);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 10% 0%, rgba(198, 40, 40, 0.08), transparent 31%),
+        radial-gradient(circle at 95% 15%, rgba(198, 40, 40, 0.05), transparent 28%),
+        linear-gradient(180deg, #ffffff, var(--background));
+    }
+
+    button, input, textarea, select { font: inherit; }
+    button { cursor: pointer; }
+
+    .app {
+      width: min(1040px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 24px 0 42px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--red);
+      border-radius: 14px;
+      color: var(--red);
+      background: rgba(255, 255, 255, 0.75);
+      box-shadow: var(--shadow);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      backdrop-filter: blur(14px);
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { margin-bottom: 2px; font-size: clamp(1.4rem, 4vw, 2rem); }
+    .subtitle { margin: 0; color: var(--muted); font-size: 0.92rem; }
+
+    .toolbar, .action-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+    }
+
+    .toolbar { justify-content: flex-end; }
+
+    .btn {
+      border: 1px solid var(--red);
+      border-radius: 12px;
+      padding: 10px 14px;
+      color: var(--red-dark);
+      background: rgba(255, 255, 255, 0.76);
+      box-shadow: 0 7px 20px rgba(125, 25, 25, 0.05);
+      transition: transform 0.16s ease, background 0.16s ease, box-shadow 0.16s ease;
+      backdrop-filter: blur(12px);
+    }
+
+    .btn:hover:not(:disabled) {
+      transform: translateY(-1px);
+      background: var(--red-soft);
+      box-shadow: 0 10px 24px rgba(125, 25, 25, 0.10);
+    }
+
+    .btn:disabled { opacity: 0.36; cursor: not-allowed; }
+    .btn.primary { color: #fff; background: var(--red); font-weight: 800; }
+    .btn.primary:hover:not(:disabled) { background: var(--red-dark); }
+    .btn.danger { color: var(--red-dark); background: #fff7f7; }
+    .btn.compact { padding: 8px 11px; }
+
+    .panel {
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .home-panel { padding: clamp(18px, 4vw, 30px); }
+
+    .home-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .home-heading h2 { margin-bottom: 5px; }
+    .home-heading p { margin-bottom: 0; color: var(--muted); }
+
+    .subject-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 14px;
+    }
+
+    .subject-card {
+      min-height: 138px;
+      padding: 18px;
+      text-align: left;
+      border: 1px solid var(--red);
+      border-radius: 17px;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.72);
+      box-shadow: 0 10px 30px rgba(125, 25, 25, 0.06);
+      transition: transform 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+      backdrop-filter: blur(12px);
+    }
+
+    .subject-card:hover {
+      transform: translateY(-3px);
+      background: var(--red-soft);
+      box-shadow: 0 16px 35px rgba(125, 25, 25, 0.12);
+    }
+
+    .subject-card h3 { margin-bottom: 9px; font-size: 1.08rem; color: var(--red-dark); }
+    .subject-card p { margin-bottom: 0; color: var(--muted); font-size: 0.91rem; }
+    .subject-count { color: var(--red); font-weight: 850; }
+
+    .viewer { overflow: hidden; }
+
+    .viewer-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 17px 20px;
+      border-bottom: 1px solid var(--border-light);
+      background: rgba(255, 255, 255, 0.55);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 31px;
+      padding: 5px 11px;
+      border: 1px solid var(--red);
+      border-radius: 999px;
+      color: var(--red-dark);
+      background: var(--red-soft);
+      font-size: 0.8rem;
+      font-weight: 850;
+    }
+
+    .counter { color: var(--muted); font-size: 0.9rem; font-weight: 750; }
+
+    .progress-track { height: 5px; background: #f5dfdf; }
+    .progress-bar { height: 100%; width: 0; background: var(--red); transition: width 0.22s ease; }
+
+    .card-content {
+      min-height: 430px;
+      display: grid;
+      align-content: center;
+      padding: clamp(26px, 6vw, 58px);
+    }
+
+    .card-content h2 {
+      max-width: 880px;
+      margin-bottom: 28px;
+      font-size: clamp(1.5rem, 4.8vw, 2.45rem);
+      line-height: 1.16;
+      color: #2e2020;
+    }
+
+    .answer-block {
+      padding: 22px;
+      border: 1px solid var(--red);
+      border-radius: 17px;
+      background: rgba(255, 255, 255, 0.72);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.9);
+      backdrop-filter: blur(12px);
+    }
+
+    .label {
+      display: block;
+      margin-bottom: 9px;
+      color: var(--red);
+      font-size: 0.77rem;
+      font-weight: 900;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+
+    .answer-text {
+      margin: 0;
+      font-size: clamp(1rem, 2.5vw, 1.15rem);
+      line-height: 1.72;
+      white-space: pre-line;
+    }
+
+    .viewer-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 17px 20px;
+      border-top: 1px solid var(--border-light);
+      background: rgba(255, 255, 255, 0.50);
+    }
+
+    .empty { padding: 48px 18px; text-align: center; color: var(--muted); }
+    .footer-note { margin: 18px 0 0; text-align: center; color: var(--muted); font-size: 0.82rem; }
+
+    dialog {
+      width: min(640px, calc(100% - 24px));
+      padding: 0;
+      border: 1px solid var(--red);
+      border-radius: 20px;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: 0 30px 80px rgba(95, 15, 15, 0.22);
+      backdrop-filter: blur(22px);
+    }
+
+    dialog::backdrop { background: rgba(70, 15, 15, 0.22); backdrop-filter: blur(5px); }
+
+    .dialog-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .dialog-head h2 { margin: 0; font-size: 1.2rem; }
+    .dialog-body { padding: 20px; }
+    .form-grid { display: grid; gap: 15px; }
+    .field { display: grid; gap: 7px; }
+    .field label { color: var(--muted); font-size: 0.88rem; font-weight: 750; }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      outline: none;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.88);
+    }
+
+    input:focus, textarea:focus, select:focus { border-color: var(--red-dark); box-shadow: 0 0 0 3px rgba(198,40,40,0.09); }
+    textarea { min-height: 104px; resize: vertical; }
+
+    .dialog-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      padding: 0 20px 20px;
+    }
+
+    @media (max-width: 680px) {
+      .app { width: min(100% - 18px, 1040px); padding-top: 14px; }
+      .topbar { align-items: flex-start; flex-direction: column; }
+      .toolbar { justify-content: flex-start; }
+      .logo { width: 41px; height: 41px; }
+      .card-content { min-height: 465px; padding: 25px 18px; }
+      .viewer-head, .viewer-actions { padding-left: 14px; padding-right: 14px; }
+      .viewer-actions > .action-group { width: 100%; }
+      .viewer-actions .btn { flex: 1; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo">IQ</div>
+        <div>
+          <h1>Interview Study Cards</h1>
+          <p class="subtitle">Docker, Kubernetes, Helm, and AWS</p>
+        </div>
+      </div>
+      <div class="toolbar">
+        <button class="btn compact" id="homeTopBtn" type="button">Home</button>
+        <button class="btn compact primary" id="addBtn" type="button">+ Add</button>
+        <button class="btn compact" id="exportBtn" type="button">Export JSON</button>
+        <button class="btn compact danger" id="resetBtn" type="button">Reset</button>
+      </div>
+    </header>
+
+    <section id="homeView" class="panel home-panel"></section>
+
+    <section id="viewerView" class="panel viewer" hidden>
+      <div class="viewer-head">
+        <span class="badge" id="subjectBadge"></span>
+        <span class="counter" id="counter"></span>
+      </div>
+      <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+      <article class="card-content">
+        <h2 id="questionText"></h2>
+        <div class="answer-block">
+          <span class="label">Answer</span>
+          <p class="answer-text" id="answerText"></p>
+        </div>
+      </article>
+      <div class="viewer-actions">
+        <div class="action-group">
+          <button class="btn" id="previousBtn" type="button">Previous</button>
+          <button class="btn" id="homeBtn" type="button">Home</button>
+          <button class="btn primary" id="nextBtn" type="button">Next</button>
+        </div>
+        <div class="action-group">
+          <button class="btn" id="editBtn" type="button">Edit</button>
+          <button class="btn danger" id="deleteBtn" type="button">Remove</button>
+        </div>
+      </div>
+    </section>
+
+    <p class="footer-note">Your cards and current position are saved in this browser.</p>
+  </main>
+
+  <dialog id="itemDialog">
+    <form id="itemForm">
+      <div class="dialog-head">
+        <h2 id="dialogTitle">Add card</h2>
+        <button class="btn compact" type="button" id="closeDialogBtn">Close</button>
+      </div>
+      <div class="dialog-body">
+        <div class="form-grid">
+          <div class="field">
+            <label for="subjectSelect">Subject</label>
+            <select id="subjectSelect" required></select>
+          </div>
+          <div class="field" id="newSubjectField" hidden>
+            <label for="newSubjectInput">New subject name</label>
+            <input id="newSubjectInput" autocomplete="off" placeholder="Example: Terraform">
+          </div>
+          <div class="field">
+            <label for="questionInput">Question or topic</label>
+            <textarea id="questionInput" required placeholder="Enter the interview question or study topic."></textarea>
+          </div>
+          <div class="field">
+            <label for="answerInput">Answer</label>
+            <textarea id="answerInput" required placeholder="Enter a clear interview-ready answer."></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="dialog-actions">
+        <button class="btn" type="button" id="cancelBtn">Cancel</button>
+        <button class="btn primary" type="submit">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script>
+    const ORIGINAL_JSON = String.raw`[
+  {
+    "subject": "Docker",
+    "question": "What is Docker, and why is it useful?",
+    "answer": "Docker is a platform for packaging an application together with its runtime, libraries, and dependencies into a container image. A container created from that image runs consistently across development, testing, and production. Docker is useful because it reduces environment differences, starts quickly, uses fewer resources than a full virtual machine, and makes applications easier to distribute and deploy."
+  },
+  {
+    "subject": "Docker",
+    "question": "What is the difference between a Docker container and a virtual machine?",
+    "answer": "A virtual machine includes a full guest operating system and runs on a hypervisor. A Docker container shares the host operating system kernel and isolates only the application processes and filesystem. Containers are normally smaller, start faster, and use fewer resources, while virtual machines provide stronger isolation and can run a different operating system kernel from the host."
+  },
+  {
+    "subject": "Docker",
+    "question": "What are Docker images, containers, and registries?",
+    "answer": "A Docker image is an immutable template containing the application and everything needed to run it. A container is a running instance of that image, and several containers can be created from the same image. A registry stores and distributes images; common registries include Docker Hub, Amazon ECR, and GitHub Container Registry. Images do not normally have a file extension, although they can be exported as a .tar archive."
+  },
+  {
+    "subject": "Docker",
+    "question": "What is a Dockerfile, and how do layers and caching work?",
+    "answer": "A Dockerfile contains instructions for building an image. FROM chooses the base image, WORKDIR sets the working directory, COPY adds files, RUN executes build commands, and CMD or ENTRYPOINT defines how the container starts. Most instructions create reusable layers. Docker reuses unchanged layers during later builds, so stable instructions should appear before frequently changing files to improve build speed."
+  },
+  {
+    "subject": "Docker",
+    "question": "How do Docker ports, networks, volumes, and environment variables work?",
+    "answer": "Port mapping exposes a container port through a host port, for example -p 8080:80. Docker networks allow containers to communicate, usually by service or container name on a custom network. Volumes keep persistent data outside the container's writable layer, so data survives container replacement. Environment variables provide runtime configuration, but sensitive values should be supplied securely rather than stored directly in the Dockerfile or image."
+  },
+  {
+    "subject": "Docker",
+    "question": "What is Docker Compose, and how is it different from a Dockerfile?",
+    "answer": "A Dockerfile describes how to build one image. Docker Compose describes how one or more containers should run together, including images or build paths, ports, networks, volumes, environment variables, and dependencies. Compose can manage a single container, but it is especially useful for local multi-container environments such as an application, database, and cache."
+  },
+  {
+    "subject": "Docker",
+    "question": "How do Docker, Docker Compose, and Kubernetes fit together?",
+    "answer": "Docker is commonly used to build OCI-compatible container images. Docker Compose is mainly used to run related containers on one machine during local development. Kubernetes orchestrates containerized applications across a cluster and provides scheduling, scaling, networking, self-healing, and rolling updates. Modern Kubernetes does not require Docker Engine; it usually runs images through containerd or CRI-O."
+  },
+  {
+    "subject": "Kubernetes",
+    "question": "What is Kubernetes, and what problems does it solve?",
+    "answer": "Kubernetes is a container orchestration platform that deploys and manages applications across a cluster of machines. It schedules workloads, maintains the desired number of replicas, replaces failed Pods, provides stable networking, performs rolling updates and rollbacks, and can scale workloads automatically. It is useful when an application must run reliably across multiple servers rather than on one machine."
+  },
+  {
+    "subject": "Kubernetes",
+    "question": "What are the main parts of Kubernetes architecture?",
+    "answer": "A Kubernetes cluster contains a control plane and worker nodes. The API server receives commands and is the main entry point. etcd stores cluster state, the scheduler chooses nodes for Pods, and controllers continuously reconcile actual state with desired state. Worker nodes run Pods through a container runtime and communicate with the control plane through components such as kubelet."
+  },
+  {
+    "subject": "Kubernetes",
+    "question": "What are Nodes, Pods, ReplicaSets, and Deployments?",
+    "answer": "A node is a worker machine, physical or virtual. A Pod is the smallest deployable Kubernetes unit and contains one or more closely related containers that share networking and can share storage. A ReplicaSet ensures that a required number of matching Pods exists. A Deployment manages ReplicaSets and provides declarative updates, scaling, rolling deployments, and rollbacks."
+  },
+  {
+    "subject": "Kubernetes",
+    "question": "What is a Kubernetes Service, and how does it find Pods?",
+    "answer": "A Service provides a stable virtual IP address and DNS name for a group of Pods. It selects Pods using labels and distributes traffic to the matching ready endpoints. A Service is not one Pod; it can route to one or many Pods. The Service can be created before the Pods, but it has no endpoints until Pods with matching labels exist and become ready."
+  },
+  {
+    "subject": "Kubernetes",
+    "question": "What is the difference between ClusterIP, NodePort, LoadBalancer, and Ingress?",
+    "answer": "ClusterIP is the default Service type and is reachable only inside the cluster. NodePort exposes a fixed port on every node and is mostly used for basic access or testing. LoadBalancer asks the cloud provider to create an external load balancer for a Service. Ingress routes external HTTP or HTTPS traffic to multiple Services using hostnames and paths, but it requires an Ingress controller."
+  },
+  {
+    "subject": "Kubernetes",
+    "question": "How can Pods be scheduled only on selected nodes?",
+    "answer": "nodeSelector is the simplest option and requires a node to contain specific labels. Node affinity provides more expressive required or preferred scheduling rules. Taints prevent ordinary Pods from being scheduled on a node, while tolerations allow selected Pods to use that node. These mechanisms are useful for dedicated workloads, special hardware, compliance boundaries, or separating environments."
+  },
+  {
+    "subject": "Kubernetes",
+    "question": "What are ConfigMaps, Secrets, and environment configuration in Kubernetes?",
+    "answer": "A ConfigMap stores non-sensitive configuration separately from the container image. A Secret stores sensitive values such as passwords, tokens, and certificates. Both can be exposed to Pods as environment variables or mounted files. Kubernetes Secrets are base64-encoded by default, which is not encryption, so production clusters should also use access controls, encryption at rest, and an appropriate secret-management system."
+  },
+  {
+    "subject": "Kubernetes",
+    "question": "What are liveness, readiness, and startup probes?",
+    "answer": "A startup probe determines when a slow-starting application has finished starting and protects it from premature liveness failures. A readiness probe determines whether a Pod can receive Service traffic. A liveness probe determines whether the container is unhealthy and should be restarted. Readiness controls traffic, while liveness controls restarts."
+  },
+  {
+    "subject": "Kubernetes",
+    "question": "How do rolling updates and rollbacks work?",
+    "answer": "During a rolling update, a Deployment gradually creates Pods with the new version and removes old Pods while trying to keep the application available. Readiness probes prevent traffic from reaching unready replacements. Kubernetes stores Deployment revisions, so an unsuccessful release can be inspected with rollout history and reverted to a previous revision with a rollback."
+  },
+  {
+    "subject": "Kubernetes",
+    "question": "Does Kubernetes use Docker?",
+    "answer": "Kubernetes does not require Docker Engine. Since the removal of dockershim, Kubernetes normally communicates with a CRI-compatible runtime such as containerd or CRI-O. It can still run images built by Docker because Docker normally produces OCI-compatible images. Docker may build the image, a registry stores it, and the Kubernetes runtime downloads and runs it."
+  },
+  {
+    "subject": "Helm",
+    "question": "What is Helm, and why is it called a Kubernetes package manager?",
+    "answer": "Helm packages related Kubernetes manifests and configuration into a reusable, versioned chart. It installs a chart as a release and supports configuration, upgrades, release history, and rollbacks. It is called a package manager because a chart contains more than values: it includes metadata, templates, optional dependencies, and default configuration for a complete Kubernetes application."
+  },
+  {
+    "subject": "Helm",
+    "question": "What are the important files in a Helm chart?",
+    "answer": "Chart.yaml contains chart metadata such as its name and version. values.yaml contains default configuration. The templates directory contains parameterized Kubernetes manifests, usually referencing values with expressions such as .Values.image.repository. A chart may also contain dependencies, helper templates, schemas, tests, and documentation. Helm renders these files into ordinary Kubernetes YAML."
+  },
+  {
+    "subject": "Helm",
+    "question": "What happens during helm install, and how is it different from kubectl apply?",
+    "answer": "helm install combines a chart's templates with its values, renders the final Kubernetes manifests, sends them to the cluster, and records the installation as a release. kubectl apply sends already-written YAML directly to Kubernetes and does not provide Helm's chart packaging, templating, release history, or values system. Helm does not replace Kubernetes; Kubernetes still creates and runs the resources."
+  },
+  {
+    "subject": "Helm",
+    "question": "What is a Helm release, and how are environments configured?",
+    "answer": "A release is one installed instance of a chart. The same chart can be installed several times with different release names and values. Teams usually keep reusable templates in the chart and use different values files for development, testing, and production. Values can also be overridden from the command line, which allows the same package to configure different image tags, replica counts, domains, or resource limits."
+  },
+  {
+    "subject": "Helm",
+    "question": "How do Helm upgrades, rollbacks, and release history work?",
+    "answer": "helm upgrade changes an existing release using an updated chart or values. Helm stores release revisions, which can be inspected with helm history. If an upgrade is unsuccessful, helm rollback restores a selected previous revision. helm uninstall removes the release. This release management is one of Helm's main advantages over manually applying a large collection of separate YAML files."
+  },
+  {
+    "subject": "Helm",
+    "question": "Which Helm commands are important for interviews?",
+    "answer": "Important commands include helm install, upgrade, rollback, uninstall, list, status, history, template, lint, and repo. helm template renders YAML locally without installing it. helm lint checks chart structure and common problems. A dry run previews an installation or upgrade. Repository commands add chart sources and refresh their indexes before charts are searched or installed."
+  },
+  {
+    "subject": "Helm",
+    "question": "What are Helm repositories, dependencies, hooks, and chart versions?",
+    "answer": "A Helm repository distributes packaged charts. A chart can declare dependencies, such as a database chart, and Helm can download them before installation. Hooks create resources at lifecycle points such as before or after installation, upgrade, rollback, or deletion. The chart version identifies the package itself, while appVersion describes the version of the application packaged by the chart."
+  },
+  {
+    "subject": "AWS",
+    "question": "What is AWS?",
+    "answer": "Amazon Web Services is a cloud platform that provides computing, storage, networking, databases, security, monitoring, and many other services on demand. Instead of purchasing and maintaining all infrastructure directly, organizations can provision resources through the AWS console, command line, APIs, or infrastructure-as-code tools and generally pay according to usage."
+  },
+  {
+    "subject": "AWS",
+    "question": "What is Amazon EC2, and how do you launch an instance?",
+    "answer": "EC2 provides resizable virtual servers in AWS. To launch one, choose an Amazon Machine Image, an instance type, storage, a VPC and subnet, a key pair, and a Security Group. Launch the instance and connect using SSH for Linux or RDP for Windows. Common ports are 22 for SSH, 3389 for RDP, 80 for HTTP, and 443 for HTTPS, but only required ports should be opened."
+  },
+  {
+    "subject": "AWS",
+    "question": "What is Amazon S3?",
+    "answer": "Amazon S3 is highly scalable object storage. Data is stored as objects inside buckets and is commonly used for images, videos, documents, backups, logs, static website assets, and data lakes. It is not a traditional filesystem or relational database. Access is controlled through IAM policies, bucket policies, and other security features."
+  },
+  {
+    "subject": "AWS",
+    "question": "What is IAM, and what does least privilege mean?",
+    "answer": "IAM controls authentication and authorization in AWS through users, groups, roles, and policies. Users normally represent people or long-lived identities, while roles provide temporary permissions to AWS services, applications, or federated users. Least privilege means granting only the actions and resources required for a task instead of broad administrative access."
+  },
+  {
+    "subject": "AWS",
+    "question": "What is a VPC?",
+    "answer": "A Virtual Private Cloud is an isolated virtual network for AWS resources. It contains an IP address range, subnets, route tables, gateways, and network security controls. Public subnets can route to an internet gateway, while private subnets normally do not expose resources directly to the internet and may use a NAT gateway for outbound access."
+  },
+  {
+    "subject": "AWS",
+    "question": "What is the difference between a Security Group and a Network ACL?",
+    "answer": "A Security Group is a stateful firewall attached to resources such as EC2 network interfaces. If an allowed request enters, its return traffic is automatically permitted. A Network ACL is a stateless firewall applied at subnet level, so inbound and outbound rules are evaluated separately. Security Groups normally provide the primary resource-level protection, while Network ACLs add subnet-level filtering."
+  },
+  {
+    "subject": "AWS",
+    "question": "What is the difference between a Load Balancer and Auto Scaling?",
+    "answer": "A Load Balancer distributes incoming traffic across healthy targets such as EC2 instances and stops routing to unhealthy targets. Auto Scaling changes the number of instances according to demand, health, or a schedule. They are commonly used together: the Auto Scaling Group maintains the required capacity, and the Load Balancer distributes traffic across the available instances."
+  }
+]`;
+
+    const DATA_KEY = "interviewStudyCards_v5";
+    const STATE_KEY = "interviewStudyState_v5";
+
+    const originalItems = JSON.parse(ORIGINAL_JSON);
+    let items = loadItems();
+    let state = loadState();
+    let editingIndex = null;
+
+    const homeView = document.getElementById("homeView");
+    const viewerView = document.getElementById("viewerView");
+    const subjectBadge = document.getElementById("subjectBadge");
+    const counter = document.getElementById("counter");
+    const progressBar = document.getElementById("progressBar");
+    const questionText = document.getElementById("questionText");
+    const answerText = document.getElementById("answerText");
+    const previousBtn = document.getElementById("previousBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const homeBtn = document.getElementById("homeBtn");
+    const homeTopBtn = document.getElementById("homeTopBtn");
+    const addBtn = document.getElementById("addBtn");
+    const editBtn = document.getElementById("editBtn");
+    const deleteBtn = document.getElementById("deleteBtn");
+    const exportBtn = document.getElementById("exportBtn");
+    const resetBtn = document.getElementById("resetBtn");
+
+    const itemDialog = document.getElementById("itemDialog");
+    const itemForm = document.getElementById("itemForm");
+    const dialogTitle = document.getElementById("dialogTitle");
+    const subjectSelect = document.getElementById("subjectSelect");
+    const newSubjectField = document.getElementById("newSubjectField");
+    const newSubjectInput = document.getElementById("newSubjectInput");
+    const questionInput = document.getElementById("questionInput");
+    const answerInput = document.getElementById("answerInput");
+    const closeDialogBtn = document.getElementById("closeDialogBtn");
+    const cancelBtn = document.getElementById("cancelBtn");
+
+    function normalizeItem(item) {
+      return {
+        subject: String(item.subject || "General").trim() || "General",
+        question: String(item.question || "Untitled topic").trim() || "Untitled topic",
+        answer: String(item.answer || item.shortAnswer || "").trim()
+      };
+    }
+
+    function loadItems() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(DATA_KEY));
+        if (Array.isArray(saved)) return saved.map(normalizeItem);
+      } catch (error) {
+        console.warn("Could not load saved cards:", error);
+      }
+      return originalItems.map(normalizeItem);
+    }
+
+    function loadState() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STATE_KEY));
+        if (saved && typeof saved === "object") {
+          return {
+            view: saved.view === "viewer" ? "viewer" : "home",
+            subject: typeof saved.subject === "string" ? saved.subject : "",
+            position: Number.isInteger(saved.position) ? saved.position : 0
+          };
+        }
+      } catch (error) {
+        console.warn("Could not load saved state:", error);
+      }
+      return { view: "home", subject: "", position: 0 };
+    }
+
+    function saveAll() {
+      localStorage.setItem(DATA_KEY, JSON.stringify(items));
+      localStorage.setItem(STATE_KEY, JSON.stringify(state));
+    }
+
+    function getSubjects() {
+      return [...new Set(items.map(item => item.subject))].sort((a, b) => a.localeCompare(b));
+    }
+
+    function getSubjectItems(subject) {
+      return items
+        .map((item, globalIndex) => ({ item, globalIndex }))
+        .filter(entry => entry.item.subject === subject);
+    }
+
+    function renderHome() {
+      state.view = "home";
+      saveAll();
+      viewerView.hidden = true;
+      homeView.hidden = false;
+
+      const subjects = getSubjects();
+      if (!subjects.length) {
+        homeView.innerHTML = '<div class="empty"><h2>No cards yet</h2><p>Use Add to create your first subject and study card.</p></div>';
+        return;
+      }
+
+      homeView.innerHTML = `
+        <div class="home-heading">
+          <div>
+            <h2>Choose a subject</h2>
+            <p>Open a subject and continue from your saved card.</p>
+          </div>
+        </div>
+        <div class="subject-grid">
+          ${subjects.map(subject => {
+            const count = getSubjectItems(subject).length;
+            return `
+              <button class="subject-card" type="button" data-subject="${escapeHtml(subject)}">
+                <h3>${escapeHtml(subject)}</h3>
+                <p><span class="subject-count">${count}</span> ${count === 1 ? "card" : "cards"}</p>
+              </button>`;
+          }).join("")}
+        </div>`;
+
+      homeView.querySelectorAll("[data-subject]").forEach(button => {
+        button.addEventListener("click", () => openSubject(button.dataset.subject));
+      });
+    }
+
+    function openSubject(subject, requestedPosition) {
+      const subjectItems = getSubjectItems(subject);
+      if (!subjectItems.length) {
+        renderHome();
+        return;
+      }
+
+      const previousSubject = state.subject;
+      state.view = "viewer";
+      state.subject = subject;
+      if (Number.isInteger(requestedPosition)) {
+        state.position = Math.max(0, Math.min(requestedPosition, subjectItems.length - 1));
+      } else if (previousSubject !== subject) {
+        state.position = 0;
+      } else {
+        state.position = Math.max(0, Math.min(state.position, subjectItems.length - 1));
+      }
+      renderViewer();
+    }
+
+    function renderViewer() {
+      const subjectItems = getSubjectItems(state.subject);
+      if (!subjectItems.length) {
+        renderHome();
+        return;
+      }
+
+      state.position = Math.max(0, Math.min(state.position, subjectItems.length - 1));
+      const current = subjectItems[state.position].item;
+
+      homeView.hidden = true;
+      viewerView.hidden = false;
+      subjectBadge.textContent = current.subject;
+      counter.textContent = `${state.position + 1} / ${subjectItems.length}`;
+      progressBar.style.width = `${((state.position + 1) / subjectItems.length) * 100}%`;
+      questionText.textContent = current.question;
+      answerText.textContent = current.answer;
+      previousBtn.disabled = state.position === 0;
+      nextBtn.disabled = state.position === subjectItems.length - 1;
+      saveAll();
+    }
+
+    function currentEntry() {
+      const subjectItems = getSubjectItems(state.subject);
+      return subjectItems[state.position] || null;
+    }
+
+    function fillSubjectOptions(selectedSubject = "") {
+      const subjects = getSubjects();
+      subjectSelect.innerHTML = [
+        ...subjects.map(subject => `<option value="${escapeHtml(subject)}">${escapeHtml(subject)}</option>`),
+        '<option value="__new__">Create new subject...</option>'
+      ].join("");
+
+      if (selectedSubject && subjects.includes(selectedSubject)) {
+        subjectSelect.value = selectedSubject;
+      } else if (subjects.length) {
+        subjectSelect.value = subjects[0];
+      } else {
+        subjectSelect.value = "__new__";
+      }
+      toggleNewSubjectField();
+    }
+
+    function toggleNewSubjectField() {
+      const creatingNew = subjectSelect.value === "__new__";
+      newSubjectField.hidden = !creatingNew;
+      newSubjectInput.required = creatingNew;
+      if (!creatingNew) newSubjectInput.value = "";
+    }
+
+    function openAddDialog() {
+      editingIndex = null;
+      dialogTitle.textContent = "Add card";
+      fillSubjectOptions(state.subject || "");
+      questionInput.value = "";
+      answerInput.value = "";
+      newSubjectInput.value = "";
+      itemDialog.showModal();
+    }
+
+    function openEditDialog() {
+      const entry = currentEntry();
+      if (!entry) return;
+      editingIndex = entry.globalIndex;
+      dialogTitle.textContent = "Edit card";
+      fillSubjectOptions(entry.item.subject);
+      questionInput.value = entry.item.question;
+      answerInput.value = entry.item.answer;
+      newSubjectInput.value = "";
+      itemDialog.showModal();
+    }
+
+    function closeDialog() {
+      itemDialog.close();
+      itemForm.reset();
+      editingIndex = null;
+    }
+
+    function removeCurrent() {
+      const entry = currentEntry();
+      if (!entry) return;
+      if (!confirm(`Remove this card from ${entry.item.subject}?`)) return;
+
+      const oldSubject = entry.item.subject;
+      items.splice(entry.globalIndex, 1);
+      const remaining = getSubjectItems(oldSubject);
+      if (!remaining.length) {
+        state = { view: "home", subject: "", position: 0 };
+        saveAll();
+        renderHome();
+        return;
+      }
+
+      state.position = Math.min(state.position, remaining.length - 1);
+      saveAll();
+      renderViewer();
+    }
+
+    function exportJson() {
+      const blob = new Blob([JSON.stringify(items, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "interview-study-cards.json";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function resetData() {
+      if (!confirm("Reset all changes and restore the original cards?")) return;
+      items = originalItems.map(normalizeItem);
+      state = { view: "home", subject: "", position: 0 };
+      saveAll();
+      renderHome();
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    previousBtn.addEventListener("click", () => {
+      if (state.position > 0) {
+        state.position -= 1;
+        renderViewer();
+      }
+    });
+
+    nextBtn.addEventListener("click", () => {
+      const length = getSubjectItems(state.subject).length;
+      if (state.position < length - 1) {
+        state.position += 1;
+        renderViewer();
+      }
+    });
+
+    homeBtn.addEventListener("click", renderHome);
+    homeTopBtn.addEventListener("click", renderHome);
+    addBtn.addEventListener("click", openAddDialog);
+    editBtn.addEventListener("click", openEditDialog);
+    deleteBtn.addEventListener("click", removeCurrent);
+    exportBtn.addEventListener("click", exportJson);
+    resetBtn.addEventListener("click", resetData);
+    closeDialogBtn.addEventListener("click", closeDialog);
+    cancelBtn.addEventListener("click", closeDialog);
+    subjectSelect.addEventListener("change", toggleNewSubjectField);
+
+    itemForm.addEventListener("submit", event => {
+      event.preventDefault();
+
+      const subject = subjectSelect.value === "__new__"
+        ? newSubjectInput.value.trim()
+        : subjectSelect.value.trim();
+      const question = questionInput.value.trim();
+      const answer = answerInput.value.trim();
+
+      if (!subject || !question || !answer) return;
+
+      if (editingIndex === null) {
+        items.push({ subject, question, answer });
+        state.subject = subject;
+        state.position = getSubjectItems(subject).length - 1;
+      } else {
+        items[editingIndex] = { subject, question, answer };
+        state.subject = subject;
+        const subjectItems = getSubjectItems(subject);
+        state.position = Math.max(0, subjectItems.findIndex(entry => entry.globalIndex === editingIndex));
+      }
+
+      saveAll();
+      itemDialog.close();
+      editingIndex = null;
+      state.view = "viewer";
+      renderViewer();
+    });
+
+    itemDialog.addEventListener("click", event => {
+      const rectangle = itemDialog.getBoundingClientRect();
+      const outside = event.clientX < rectangle.left || event.clientX > rectangle.right || event.clientY < rectangle.top || event.clientY > rectangle.bottom;
+      if (outside) closeDialog();
+    });
+
+    if (state.view === "viewer" && getSubjectItems(state.subject).length) {
+      renderViewer();
+    } else {
+      renderHome();
+    }
+  </script>
+</body>
+</html>
