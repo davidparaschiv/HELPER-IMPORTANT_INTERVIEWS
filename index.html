@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Mobile-first interview study cards for Docker, Kubernetes, Helm, and AWS.">
+  <title>Interview Study Cards</title>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo">IQ</div>
+        <div class="brand-copy">
+          <h1>Interview Study Cards</h1>
+          <p class="subtitle">Docker, Kubernetes, Helm, and AWS</p>
+        </div>
+      </div>
+      <div class="toolbar">
+        <button class="btn compact" id="homeTopBtn" type="button">Home</button>
+        <button class="btn compact primary" id="addBtn" type="button">+ Add</button>
+        <button class="btn compact" id="refreshBtn" type="button">Refresh</button>
+      </div>
+    </header>
+
+    <div id="statusBar" class="status" role="status">Connecting to Firebase…</div>
+
+    <section id="homeView" class="panel home-panel"></section>
+
+    <section id="viewerView" class="panel viewer" hidden>
+      <div class="viewer-head">
+        <span class="badge" id="subjectBadge"></span>
+        <span class="counter" id="counter"></span>
+      </div>
+      <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+      <article class="card-content">
+        <div class="question-row">
+          <h2 id="questionText"></h2>
+          <button class="question-edit-btn" id="questionEditBtn" type="button" aria-label="Edit this question" title="Edit this question">✎</button>
+        </div>
+        <div class="answer-block">
+          <span class="label">Answer</span>
+          <div class="answer-text" id="answerText"></div>
+        </div>
+      </article>
+      <div class="viewer-actions">
+        <div class="action-group navigation-actions">
+          <button class="btn" id="previousBtn" type="button">Previous</button>
+          <button class="btn" id="homeBtn" type="button">Home</button>
+          <button class="btn primary" id="nextBtn" type="button">Next</button>
+        </div>
+        <div class="action-group edit-actions">
+          <button class="btn" id="editBtn" type="button">Edit</button>
+          <button class="btn danger" id="deleteBtn" type="button">Remove</button>
+        </div>
+      </div>
+    </section>
+
+    <p class="footer-note">Changes are saved to Firebase and appear on every device.</p>
+  </main>
+
+  <dialog id="itemDialog">
+    <form id="itemForm">
+      <div class="dialog-head">
+        <h2 id="dialogTitle">Add card</h2>
+        <button class="btn compact" type="button" id="closeDialogBtn">Close</button>
+      </div>
+      <div class="dialog-body">
+        <div class="form-grid">
+          <div class="field">
+            <label for="subjectSelect">Subject</label>
+            <select id="subjectSelect" required></select>
+          </div>
+          <div class="field" id="newSubjectField" hidden>
+            <label for="newSubjectInput">New subject name</label>
+            <input id="newSubjectInput" autocomplete="off" placeholder="Example: Terraform">
+          </div>
+          <div class="field">
+            <label for="questionInput">Question or topic</label>
+            <textarea id="questionInput" required placeholder="Enter the interview question or study topic."></textarea>
+          </div>
+          <div class="field">
+            <label for="answerInput">Answer</label>
+            <textarea id="answerInput" required placeholder="Enter a short interview-ready answer."></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="dialog-actions">
+        <button class="btn" type="button" id="cancelBtn">Cancel</button>
+        <button class="btn primary" id="saveBtn" type="submit">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
