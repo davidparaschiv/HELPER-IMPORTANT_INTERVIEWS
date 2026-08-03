@@ -540,6 +540,21 @@
     "subject": "AWS",
     "question": "What is the difference between a Load Balancer and Auto Scaling?",
     "answer": "A Load Balancer distributes incoming traffic across healthy targets such as EC2 instances and stops routing to unhealthy targets. Auto Scaling changes the number of instances according to demand, health, or a schedule. They are commonly used together: the Auto Scaling Group maintains the required capacity, and the Load Balancer distributes traffic across the available instances."
+  },
+      {
+    "subject": "Docker",
+    "question": "Which Docker terminal commands are important for interviews?",
+    "answer": "Use 'docker build -t myapp:1.0 .' to build an image from the Dockerfile in the current directory. Use 'docker images' to list local images and 'docker run -p 8080:8080 myapp:1.0' to create and start a container while mapping host port 8080 to container port 8080. Use 'docker ps' to list running containers, 'docker ps -a' to include stopped containers, 'docker logs <container>' to inspect output, and 'docker exec -it <container> sh' to open a shell inside a running container. Use 'docker stop <container>' to stop it and 'docker rm <container>' to remove it. Use 'docker pull <image>' and 'docker push <image>' to download or upload images. Use 'docker save -o myapp.tar myapp:1.0' to export an image and 'docker load -i myapp.tar' to import it. For Compose, use 'docker compose up' to start the defined services, 'docker compose up -d' to run them in the background, and 'docker compose down' to stop and remove the Compose containers and networks."
+  },
+  {
+    "subject": "Kubernetes",
+    "question": "Which kubectl commands are important for interviews?",
+    "answer": "Use 'kubectl apply -f deployment.yaml' to create or update resources declaratively from a file, and 'kubectl apply -f .' to apply all manifest files in the current directory. Use 'kubectl get pods', 'kubectl get deployments', 'kubectl get services', and 'kubectl get nodes' to inspect resources. Use 'kubectl describe pod <pod-name>' for detailed status and events, and 'kubectl logs <pod-name>' to read container logs. Use 'kubectl exec -it <pod-name> -- sh' to execute a shell inside a container. Use 'kubectl scale deployment myapp --replicas=3' to change the replica count. Use 'kubectl rollout status deployment/myapp' to monitor an update, 'kubectl rollout history deployment/myapp' to inspect revisions, and 'kubectl rollout undo deployment/myapp' to restore the previous revision. Use 'kubectl delete -f deployment.yaml' to remove resources defined in a file. To label a node, use 'kubectl label node node1 gpu=true'; a Pod can then target that label using nodeSelector or node affinity."
+  },
+  {
+    "subject": "Helm",
+    "question": "Which Helm terminal commands are important for interviews?",
+    "answer": "Use 'helm install myapp ./myapp-chart' to install a chart as a release named myapp. Use 'helm list' to view installed releases and 'helm status myapp' to inspect one release. Use 'helm upgrade myapp ./myapp-chart --set image.tag=2.0' to update an existing release and override a value from the command line. Use 'helm history myapp' to view its revisions and 'helm rollback myapp 1' to restore revision 1. Use 'helm uninstall myapp' to remove the release. Before deployment, use 'helm lint ./myapp-chart' to check the chart and 'helm template myapp ./myapp-chart' to render the generated Kubernetes YAML locally. Use 'helm install myapp ./myapp-chart --dry-run --debug' to preview an installation. For repositories, use 'helm repo add <name> <repository-url>', 'helm repo update', and 'helm search repo <chart-name>'. Use 'helm dependency update ./myapp-chart' to download or refresh chart dependencies."
   }
 ]`;
 
